@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "BibleApp",
-    "slug": "BibleApp",
+    "name": "Remember",
+    "slug": "Remember",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +18,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.matt1059.Remember"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3dbba71f-f773-47bd-9d06-2405e789b94c"
+      }
     }
-  }
+  },
+  "plugins": [
+    "@react-native-voice/voice",
+    {
+      "microphonePermission": "Allow BibleApp to access your microphone",
+      "speechRecognitionPermission": "Allow BibleApp to securely recognize your speech"
+    }
+  ]
 }
