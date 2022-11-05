@@ -17,7 +17,6 @@ export default function App() {
   }, []);
 
   const onSpeechError = async (e) => {
-    console.log(e);
   }
 
   const onSpeechResults = async (e) => {

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Appearance } from "react-native";
+import { Appearance, StatusBar, SafeAreaView, View } from "react-native";
 import { lightColors, darkColors } from "../utils/colorThemes";
 
 export const ThemeContext = React.createContext({
-  isDark: false,
+  isDark: true,
   colors: lightColors,
   setScheme: () => {},
 });
@@ -13,7 +13,7 @@ export const ThemeProvider = (props) => {
   const [isDark, setIsDark] = React.useState(colorScheme === "dark");
 
   React.useEffect(() => {
-    setIsDark(colorScheme === "dark");
+    setIsDark(true);
   }, [colorScheme]);
 
   const defaultTheme = {
@@ -22,11 +22,13 @@ export const ThemeProvider = (props) => {
     setScheme: (scheme) => setIsDark(scheme === "dark"),
   };
 
+  const barStyle = isDark ? "light-content" : "dark-content";
+
   return (
     <ThemeContext.Provider value={defaultTheme}>
-      {props.children}
+      <SafeAreaView style={{ flex: 1, backgroundColor: defaultTheme.colors.background }}>
+        {props.children}
+      </SafeAreaView>
     </ThemeContext.Provider>
   );
 };
-
-export const useTheme = () => React.useContext(ThemeContext);

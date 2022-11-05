@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Switch } from "react-native";
-import { useTheme } from "../context/ThemeProvider";
+import { useTheme } from "../hooks/useTheme";
 
 export const Toggle = () => {
   // We're also pulling setScheme here!

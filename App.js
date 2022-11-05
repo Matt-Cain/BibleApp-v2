@@ -1,18 +1,18 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from 'react-redux';
 import { ThemeProvider } from "./context/ThemeProvider";
+import store from './store';
 import Tabs from "./navigation/Tabs";
 
-const App = () => {
-  return (
-    <SafeAreaProvider>
-        <ThemeProvider>
-          <NavigationContainer>
-            <Tabs />
-          </NavigationContainer>
-        </ThemeProvider>
-    </SafeAreaProvider>
-  );
-};
+const App = () => (
+	<Provider store={store}>
+		<ThemeProvider>
+			<NavigationContainer>
+				<Tabs />
+			</NavigationContainer>
+		</ThemeProvider>
+	</Provider>
+);
+
 export default App;

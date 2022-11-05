@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { useTheme } from "../context/ThemeProvider";
+import { useTheme } from "../hooks/useTheme";
 
 const CustomTabBarButton = ({ children, onPress }) => {
 	const { colors, isDark } = useTheme();
