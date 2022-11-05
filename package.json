@@ -8,6 +8,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-voice/voice": "^3.1.5",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.13",
@@ -26,7 +27,9 @@
     "react-native-webview": "^11.23.1",
     "react-redux": "^8.0.4",
     "redux": "^4.2.0",
-    "redux-saga": "^1.2.1"
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.2.1",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

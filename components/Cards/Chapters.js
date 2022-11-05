@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
-import { useDispatch } from 'react-redux';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
 import { setChapter } from '../../actions/chapters';
 import { getVerses } from '../../actions/verses';
@@ -7,6 +7,7 @@ import { getVerses } from '../../actions/verses';
 
 const Chapters = ({ data, setPage }) => {
   const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.chapters);
   const { colors } = useTheme()
   const styles = makeStyles(colors)
 
@@ -29,14 +30,16 @@ const Chapters = ({ data, setPage }) => {
 
   return (
     <View style={styles.container}>
-      {data ? (
+      {data && !loading ? (
         <FlatList
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
       ) : (
-        <View></View>
+        <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
       )}
     </View>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
 import { setBible } from '../../actions/bibles';
@@ -15,14 +15,15 @@ const Verses = ({ data, setPage }) => {
   const { colors } = useTheme()
   const styles = makeStyles(colors)
   const { navButtonActive } = useSelector(state => state.navigation);
+  const { loading } = useSelector(state => state.verses);
 
 
   useEffect(() => {
-  if (navButtonActive && isFocused && selection) {
-    dispatch(archiveVerse(data[selection]));
-    setSelection(null);
-    dispatch(deactivateNavButton());
-  }
+    if (navButtonActive && isFocused && selection) {
+      dispatch(archiveVerse(data[selection]));
+      setSelection(null);
+      dispatch(deactivateNavButton());
+    }
   }, [navButtonActive, isFocused, selection])
 
 
@@ -44,14 +45,16 @@ const Verses = ({ data, setPage }) => {
 
   return (
     <View style={styles.container}>
-      {data ? (
+      {data  && !loading ? (
         <FlatList
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item.verse}
         />
       ) : (
-        <View></View>
+        <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
       )}
     </View>
   );

@@ -24,7 +24,7 @@ export const tabData = [
 	{
 		name: "Train",
 		screen: TrainScreen,
-		icon: { Icon: AntDesign, iconName: "pluscircleo", size: 30 },
+		icon: { Icon: AntDesign, iconName: "plus", size: 50 },
 		CustomButton: CustomTabBarButton
 	},
 	{

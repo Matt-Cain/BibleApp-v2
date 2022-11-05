@@ -55,7 +55,7 @@ const Tabs = () => {
 									>
 										<Icon
 											name={iconName}
-											color={focused ? colors.iconSelected : colors.icon}
+											color={focused && name !== "Train" ? colors.iconSelected : colors.icon}
 											size={size}
 										/>
 									</View>

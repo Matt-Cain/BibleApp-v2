@@ -3,33 +3,50 @@ import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../hooks/useTheme';
 import { useIsFocused } from "@react-navigation/native";
+import { saveAsFavorite, removeAsFavorite } from '../actions/archives';
+import { deactivateNavButton } from '../actions/navigation';
+import { Ionicons } from '@expo/vector-icons';
 
-const ArchiveScreen = () => {
+const ArchiveScreen = ({ navigation }) => {
   const [selection, setSelection] = useState(null);
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const { colors } = useTheme()
   const styles = makeStyles(colors)
   const { verses } = useSelector(state => state.archives);
+  const { navButtonActive } = useSelector(state => state.navigation);
 
-  // if (navButtonActive && isFocused && selection) {
-  //   dispatch(archiveVerse(data[selection]));
-  //   setSelection(null);
-  // }
+  if (navButtonActive && isFocused && Number.isInteger(selection)) {
+    navigation.navigate("Train", { item: verses[selection] });
+    setSelection(null);
+    dispatch(deactivateNavButton());
+  }
 
+  const updateSelection = (index) => {
+    selection === index ? setSelection(null) : setSelection(index);
+  }
+
+  const handleFavorite = (item) => {
+    console.log('item', item.isFavorite);
+    if (item.isFavorite) {
+      dispatch(removeAsFavorite(item));
+    } else {
+      dispatch(saveAsFavorite(item));
+    }
+  }
 
   const Item = ({ index, item }) => {
-    console.log(item);
+    const { verse, isFavorite } = item;
     return (
       <View style={[styles.item, index === selection ? styles.selected : ""]}>
-        <View style={styles.header}>
-          <Text style={styles.title}>{item.bookname}: {item.chapter} Verse: {item.verse}</Text>
+        <TouchableOpacity onPress={() => updateSelection(index)}>
+          <View style={[index === selection ? styles.headerSelected : styles.header]}>
+            <Text style={[index === selection ? styles.titleSelected : styles.title]}>{verse.bookname}: {verse.chapter} Verse: {verse.verse}</Text>
+            <Ionicons onPress={() => handleFavorite(item)} name={isFavorite ? 'star' : 'star-outline'} size={24} color={index === selection ? 'black' : colors.primary} />
           </View>
-        <TouchableOpacity>
           <Text
-            onPress={() => setSelection(index)}
             style={[styles.verseNumber, styles.itemText, index === selection ? styles.itemTextSelected : ""]}>
-            {item.text}
+            {verse.text}
           </Text>
         </TouchableOpacity>
       </View>
@@ -40,15 +57,17 @@ const ArchiveScreen = () => {
 
   return (
     <View style={styles.container}>
-      {verses ? (
-        <FlatList
-          data={verses}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.verse}
+      <View style={styles.innerContainer}>
+        {verses ? (
+          <FlatList
+            data={verses}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
           />
-      ) : (
-        <View></View>
-      )}
+        ) : (
+          <View></View>
+        )}
+      </View>
     </View>
   );
 };
@@ -64,11 +83,11 @@ const makeStyles = (colors) => {
     innerContainer: {
       flex: 1,
       marginBottom: 160,
-      marginTop: 20,
+      // marginTop: 20,
       backgroundColor: colors.background,
-      borderColor: "#64ffda",
-      borderBottomWidth: 3,
-      borderTopWidth: 3,
+      // borderColor: "black",
+      // borderBottomWidth: 3,
+      // borderTopWidth: 3,
     },
     item: {
       color: "white",
@@ -97,6 +116,10 @@ const makeStyles = (colors) => {
       fontSize: 20,
       color: "#FFFFFF",
     },
+    titleSelected: {
+      fontSize: 20,
+      color: "black",
+    },
     header: {
       fontSize: 20,
       color: "#121212",
@@ -105,6 +128,18 @@ const makeStyles = (colors) => {
       flexDirection: "row",
       marginBottom: 10,
       borderBottomColor: colors.primary,
+      borderBottomWidth: 1,
+      paddingBottom: 15,
+      justifyContent: "space-between",
+    },
+    headerSelected: {
+      justifyContent: "space-between",
+      fontSize: 20,
+      textAlign: "center",
+      fontWeight: "bold",
+      flexDirection: "row",
+      marginBottom: 10,
+      borderBottomColor: '#000000',
       borderBottomWidth: 1,
       paddingBottom: 15,
     },

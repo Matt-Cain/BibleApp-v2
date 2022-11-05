@@ -22,13 +22,12 @@ const SearchScreen = () => {
   const dispatch = useDispatch();
 
   const [page, setPage] = React.useState("books");
-  const { bibles, bible } = useSelector(state => state.bibles);
-  const { books, book } = useSelector(state => state.books);
-  const { chapters, chapter } = useSelector(state => state.chapters);
-  const { verses, verse } = useSelector(state => state.verses);
+  const { books } = useSelector(state => state.books);
+  const { chapters } = useSelector(state => state.chapters);
+  const { verses } = useSelector(state => state.verses);
 
-  const pagesData = { bibles: bibles, books: books, chapters: chapters, verses: verses };
-  const pageComponents = { bibles: Bibles, books: Books, chapters: Chapters, verses: Verses };
+  const pagesData = { books: books, chapters: chapters, verses: verses };
+  const pageComponents = {  books: Books, chapters: Chapters, verses: Verses };
 
   const PageComponent = pageComponents[page];
   const pageData = pagesData[page];
