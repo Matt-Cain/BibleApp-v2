@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "../hooks/useTheme";
+import { useDispatch } from "react-redux";
+import { activateNavButton } from "../actions/navigation";
 
 const CustomTabBarButton = ({ children, onPress }) => {
 	const { colors, isDark } = useTheme();
+	const dispatch = useDispatch();
 
 	return (
 		<TouchableOpacity
@@ -10,9 +13,7 @@ const CustomTabBarButton = ({ children, onPress }) => {
 				top: -40,
 				elevation: 5,
 			}}
-			onPress={() => {
-				// setNavButtonState(true);
-			}}
+			onPress={() => dispatch(activateNavButton())}
 		>
 			<View
 				style={{
@@ -21,7 +22,7 @@ const CustomTabBarButton = ({ children, onPress }) => {
 					borderRadius: 50,
 					justifyContent: "center",
 					alignItems: "center",
-					  backgroundColor: colors.background,
+					backgroundColor: colors.background,
 				}}
 			>
 				<View

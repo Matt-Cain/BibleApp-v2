@@ -2,7 +2,8 @@ import {
   GET_VERSES_FAILED,
   GET_VERSES_PENDING,
   GET_VERSES_SUCCESS,
-  SET_VERSE,
+  CLEAR_VERSES,
+  SET_VERSE
 } from '../constants';
 
 const initialState = {
@@ -13,7 +14,6 @@ const initialState = {
 }
 
 const verses = (state = initialState, action) => {
-  console.log('action reducer', action);
   switch (action.type) {
     case GET_VERSES_PENDING:
       return {
@@ -36,6 +36,11 @@ const verses = (state = initialState, action) => {
       return {
         ...state,
         verse: action.payload,
+      }
+    case CLEAR_VERSES:
+      return {
+        ...state,
+        verses: [],
       }
     default:
       return state

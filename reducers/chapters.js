@@ -8,11 +8,13 @@ import {
 const initialState = {
   chapters: [],
   chapter: "",
+  chapterNumber: "",
   loading: false,
   error: null,
 }
 
 const chapters = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
     case GET_CHAPTERS_PENDING:
       return {
@@ -34,7 +36,8 @@ const chapters = (state = initialState, action) => {
     case SET_CHAPTER:
       return {
         ...state,
-        chapter: action.payload,
+        chapter: action.payload.name,
+        chapterNumber: action.payload.number,
       }
     default:
       return state

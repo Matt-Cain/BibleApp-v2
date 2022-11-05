@@ -31,7 +31,7 @@ const Tabs = () => {
 	}
 
 	return (
-		<View style={{ flex: 1}}>
+		<View style={{ flex: 1 }}>
 			<Tab.Navigator screenOptions={screenOptions}>
 				{tabData.map(({ name, screen, icon, CustomButton }, index) => {
 					const { Icon, iconName, size } = icon;

@@ -1,22 +1,47 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { useDispatch } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import { setBible } from '../../actions/bibles';
 import { getChapters, setChapter } from '../../actions/chapters';
+import { setBook } from '../../actions/books';
+import { clearVerses } from '../../actions/verses';
 
 
-const Books = ({ item, dispatchSelection }) => {
+const Books = ({ data, setPage }) => {
   const dispatch = useDispatch();
   const { colors } = useTheme()
-	const styles = makeStyles(colors)
+  const styles = makeStyles(colors)
 
-	return (
-		<View style={styles.item}>
-			<TouchableOpacity onPress={() => dispatchSelection({ page: "books", nextPage: "chapters", id: item.id })}>
-				<Text style={styles.title}>{item.name}</Text>
-			</TouchableOpacity>
-		</View>
-	)
+  const Item = ({index, item, setPage}) => {
+    return (
+      <View style={styles.item}>
+        <TouchableOpacity onPress={() => {
+          dispatch(setBook({ id: item.id, name: item.name }));
+          dispatch(clearVerses());
+          dispatch(getChapters({ books: item.id }));
+          setPage("chapters");
+        }
+        }>
+          <Text style={styles.title}>{item.name}</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  const renderItem = ({ item, index }) => <Item index={index} item={item} setPage={setPage} />;
+
+  return (
+    <View style={styles.container}>
+      {data ? (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <View></View>
+      )}
+    </View>
+  );
 };
 
 const makeStyles = (colors) => {

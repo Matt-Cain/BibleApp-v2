@@ -17,9 +17,9 @@ export const tabData = [
 		icon: { Icon: Ionicons, iconName: "book", size: 30 },
 	},
 	{
-		name: "Favorites",
-		screen: FavoritesScreen,
-		icon: { Icon: Ionicons, iconName: "star", size: 30 },
+		name: "Archive",
+		screen: ArchiveScreen,
+		icon: { Icon: Ionicons, iconName: "folder", size: 30 },
 	},
 	{
 		name: "Train",
@@ -28,9 +28,9 @@ export const tabData = [
 		CustomButton: CustomTabBarButton
 	},
 	{
-		name: "Archive",
-		screen: ArchiveScreen,
-		icon: { Icon: Ionicons, iconName: "folder", size: 30 },
+		name: "Favorites",
+		screen: FavoritesScreen,
+		icon: { Icon: Ionicons, iconName: "star", size: 30 },
 	},
 	{
 		name: "Settings",

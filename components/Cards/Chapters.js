@@ -1,23 +1,45 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { useDispatch } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
-import { setBible } from '../../actions/bibles';
-import { getChapters, setChapter } from '../../actions/chapters';
+import { setChapter } from '../../actions/chapters';
+import { getVerses } from '../../actions/verses';
 
 
-const Chapters = ({ item, dispatchSelection }) => {
+const Chapters = ({ data, setPage }) => {
   const dispatch = useDispatch();
   const { colors } = useTheme()
   const styles = makeStyles(colors)
-  // const name = item.reference.split(" ")[0]
 
-	return (
-		<View style={styles.item}>
-			<TouchableOpacity onPress={() => dispatchSelection({ page: "chapters", nextPage: "verses", id: item.number })}>
-				<Text style={ item.id.includes('intro') ? styles.header : styles.title}>{item.reference}</Text>
-			</TouchableOpacity>
-		</View>
-	)
+  const Item = ({ index, item, setPage }) => {
+    return (
+      <View style={styles.item}>
+        <TouchableOpacity onPress={() => {
+          dispatch(setChapter({ number: item.number, name: item.reference }));
+          dispatch(getVerses(item.reference));
+          setPage("verses");
+        }
+        }>
+          <Text style={item.id.includes('intro') ? styles.header : styles.title}>{item.reference}</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  const renderItem = ({ item, index }) => <Item index={index} item={item} setPage={setPage} />;
+
+  return (
+    <View style={styles.container}>
+      {data ? (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <View></View>
+      )}
+    </View>
+  );
 };
 
 

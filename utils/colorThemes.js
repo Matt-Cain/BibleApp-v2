@@ -17,6 +17,11 @@ export const darkColors = {
   menuBackground: "#161b22",
   primary: "#64ffda",
   icon: "#f6f7f9",
+  item: {
+    background: "#161b22",
+    borderColor: "#64ffda",
+    text: "#FFFFFF",
+  },
   iconSelected: "#64ffda",
   addButton: "#64ffda",
   addButtonCenter: "white",

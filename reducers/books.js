@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   books: [],
+  bookId: "",
   book: "",
   loading: false,
   error: null,
@@ -34,7 +35,8 @@ const books = (state = initialState, action) => {
     case SET_BOOK:
       return {
         ...state,
-        book: action.payload,
+        book: action.payload.book,
+        bookId: action.payload.id,
       }
     default:
       return state

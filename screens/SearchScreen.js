@@ -20,9 +20,6 @@ const SearchScreen = () => {
 
   // State
   const dispatch = useDispatch();
-  // const loading = useSelector(state => state.bibles.loading);
-  // const error = useSelector(state => state.bibles.error);
-
 
   const [page, setPage] = React.useState("books");
   const { bibles, bible } = useSelector(state => state.bibles);
@@ -30,27 +27,14 @@ const SearchScreen = () => {
   const { chapters, chapter } = useSelector(state => state.chapters);
   const { verses, verse } = useSelector(state => state.verses);
 
-  console.log(chapters);
-
   const pagesData = { bibles: bibles, books: books, chapters: chapters, verses: verses };
   const pageComponents = { bibles: Bibles, books: Books, chapters: Chapters, verses: Verses };
-  const pageGetters = { bibles: getBibles, books: getBooks, chapters: getChapters, verses: getVerses };
-  const pageSetters = { bibles: setBible, books: setBook, chapters: setChapter, verses: setVerse };
 
   const PageComponent = pageComponents[page];
   const pageData = pagesData[page];
 
-  const dispatchSelection = ({ page, nextPage, id }) => {
-    console.log(page, nextPage, id);
-    const apiState = { books: book, chapters: chapter };
-    const newState = {...apiState, [page]: id};
-    dispatch(pageSetters[page](id));
-    dispatch(pageGetters[nextPage](newState));
-    setPage(nextPage);
-  };
-
   // FlatListItem
-  const renderItem = ({ item }) => <PageComponent item={item} dispatchSelection={dispatchSelection} />;
+  const renderItem = ({ item, index }) => <PageComponent index={index} item={item} setPage={setPage} />;
 
   useEffect(() => {
     if (books.length === 0) {
@@ -63,11 +47,7 @@ const SearchScreen = () => {
       <BreadCrumb activePage={page} setPage={setPage}/>
       <View style={styles.innerContainer}>
         {pageData ? (
-          <FlatList
-            data={pageData}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
+          <PageComponent data={pageData} setPage={setPage} />
         ) : (
           <View></View>
         )}

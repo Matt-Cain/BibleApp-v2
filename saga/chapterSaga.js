@@ -3,7 +3,7 @@ import { GET_CHAPTERS_SUCCESS, GET_CHAPTERS_FAILED, GET_CHAPTERS_PENDING } from 
 import axios from 'axios';
 
 const getApi = ({bibles, books}) => {
-	const apiUrl = `https://api.scripture.api.bible/v1/bibles/65bfdebd704a8324-01/books/${books}/chapters`;
+	const apiUrl = `https://api.scripture.api.bible/v1/bibles/65eec8e0b60e656b-01/books/${books}/chapters`;
 
 	return axios({
 		method: 'get',

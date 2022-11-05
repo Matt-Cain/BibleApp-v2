@@ -3,7 +3,7 @@ import { GET_BOOKS_SUCCESS, GET_BOOKS_FAILED } from '../constants';
 import axios from 'axios';
 
 const getApi = () => {
-	const apiUrl = `https://api.scripture.api.bible/v1/bibles/65bfdebd704a8324-01/books`;
+	const apiUrl = `https://api.scripture.api.bible/v1/bibles/65eec8e0b60e656b-01/books`;
 
 	return axios({
 		method: 'get',
