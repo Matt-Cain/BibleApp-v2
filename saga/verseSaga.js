@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const getApi = (payload) => {
 	const param = payload.replace(" ", "+");
-	console.log('param', param);
 	const apiUrl = `http://labs.bible.org/api/?passage=${param}&type=json`;
 
 	return axios({

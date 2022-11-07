@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, FlatList, ActivityIndicator } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../hooks/useTheme';
 import { setChapter } from '../../actions/chapters';
@@ -20,27 +20,26 @@ const Chapters = ({ data, setPage }) => {
           setPage("verses");
         }
         }>
-          <Text style={item.id.includes('intro') ? styles.header : styles.title}>{item.reference}</Text>
+          <Text style={styles.title}>{item.number}</Text>
         </TouchableOpacity>
       </View>
     )
   }
 
-  const renderItem = ({ item, index }) => <Item index={index} item={item} setPage={setPage} />;
 
   return (
     <View style={styles.container}>
-      {data && !loading ? (
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-          <ActivityIndicator size="large" color={colors.primary} />
+        {data && !loading ? (
+      <ScrollView>
+        <View style={styles.innerContainer}>
+            {data.map((item, i) => <Item key={item.id} index={i} item={item} setPage={setPage} />)}
         </View>
-      )}
+      </ScrollView>
+        ) : (
+          <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+            <ActivityIndicator size="large" color={colors.primary} />
+          </View>
+        )}
     </View>
   );
 };
@@ -52,35 +51,44 @@ const makeStyles = (colors) => {
     container: {
       flex: 1,
       backgroundColor: colors.background,
+      // flexDirection: 'row',
+      // flexWrap: 'wrap',
+      // justifyContent: 'space-evenly',
     },
     innerContainer: {
-      flex: 1,
-      marginBottom: 160,
       marginTop: 20,
+      flex: 1,
+      flexWrap: 'wrap',
+      // marginBottom: 160,
+      // marginTop: 20,
       backgroundColor: colors.background,
-      borderColor: "#64ffda",
-      borderBottomWidth: 3,
-      borderTopWidth: 3,
+      // borderColor: "#64ffda",
+      // borderBottomWidth: 3,
+      // borderTopWidth: 3,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignContent: 'center',
     },
     item: {
+      margin: 5,
       color: "white",
-      backgroundColor: "white",
-      padding: 10,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      backgroundColor: colors.menuBackground,
+      // padding: 10,
+      // marginVertical: 8,
+      // marginHorizontal: 16,
       borderColor: "black",
-      borderWidth: 1,
-      borderRadius: 20,
+      // borderWidth: 1,
+      borderRadius: 10,
+      width: '30%',
+      height: 70,
+      padding: 10,
+      justifyContent: 'center',
     },
     title: {
       fontSize: 20,
-      color: "#121212",
-    },
-    header: {
-      fontSize: 20,
-      color: "#121212",
-      textAlign: "center",
-      fontWeight: "bold",
+      color: "white",
+      whiteSpace: 'nowrap',
+      textAlign: 'center',
     },
   })
 };

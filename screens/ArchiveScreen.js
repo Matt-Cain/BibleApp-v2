@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../hooks/useTheme';
 import { useIsFocused } from "@react-navigation/native";
 import { saveAsFavorite, removeAsFavorite } from '../actions/archives';
 import { deactivateNavButton } from '../actions/navigation';
+import { setTrainingVerse } from '../actions/trainer';
+import Filters from '../components/Filters';
 import { Ionicons } from '@expo/vector-icons';
 
 const ArchiveScreen = ({ navigation }) => {
@@ -15,19 +17,26 @@ const ArchiveScreen = ({ navigation }) => {
   const styles = makeStyles(colors)
   const { verses } = useSelector(state => state.archives);
   const { navButtonActive } = useSelector(state => state.navigation);
+  const [filter, setFilter] = useState('archive');
 
+  const data = { archive: verses, favorites: verses.filter(verse => verse.isFavorite) };
+  const displayData = data[filter];
+
+
+useEffect(() => {
   if (navButtonActive && isFocused && Number.isInteger(selection)) {
-    navigation.navigate("Train", { item: verses[selection] });
+    navigation.navigate("Train");
     setSelection(null);
+    dispatch(setTrainingVerse(verses[selection]));
     dispatch(deactivateNavButton());
   }
+}, [navButtonActive, isFocused, selection]);
 
   const updateSelection = (index) => {
     selection === index ? setSelection(null) : setSelection(index);
   }
 
   const handleFavorite = (item) => {
-    console.log('item', item.isFavorite);
     if (item.isFavorite) {
       dispatch(removeAsFavorite(item));
     } else {
@@ -57,10 +66,11 @@ const ArchiveScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Filters filter={filter} setFilter={setFilter} />
       <View style={styles.innerContainer}>
-        {verses ? (
+        {displayData ? (
           <FlatList
-            data={verses}
+            data={displayData}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />

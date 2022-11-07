@@ -17,6 +17,9 @@ const Verses = ({ data, setPage }) => {
   const { navButtonActive } = useSelector(state => state.navigation);
   const { loading } = useSelector(state => state.verses);
 
+  const updateSelection = (index) => {
+    selection === index ? setSelection(null) : setSelection(index);
+  }
 
   useEffect(() => {
     if (navButtonActive && isFocused && selection) {
@@ -32,7 +35,7 @@ const Verses = ({ data, setPage }) => {
       <View style={[styles.item, index === selection ? styles.selected : ""]}>
         <TouchableOpacity>
           <Text
-            onPress={() => setSelection(index)}
+            onPress={() => updateSelection(index)}
             style={[styles.verseNumber, styles.itemText, index === selection ? styles.itemTextSelected : ""]}>
             {`${item.verse}. ${item.text}`}
           </Text>

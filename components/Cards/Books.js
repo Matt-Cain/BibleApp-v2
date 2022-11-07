@@ -65,7 +65,7 @@ const makeStyles = (colors) => {
     },
     item: {
       color: "white",
-      backgroundColor: "white",
+      backgroundColor: colors.menuBackground,
       padding: 10,
       marginVertical: 8,
       marginHorizontal: 16,
@@ -75,7 +75,7 @@ const makeStyles = (colors) => {
     },
     title: {
       fontSize: 20,
-      color: "#121212",
+      color: "white",
     },
   })
 };

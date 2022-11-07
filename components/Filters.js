@@ -3,22 +3,23 @@ import { useDispatch } from 'react-redux';
 import { useTheme } from '../hooks/useTheme';
 
 const buttonData = [
-	{ title: "Books", page: "books" },
-	{ title: ">", page: null },
-	{ title: "Chapters", page: "chapters" },
-	{ title: ">", page: null },
-	{ title: "Verses", page: "verses" },
+	{ title: "Archive", type: "archive" },
+	{ title: "|", type: null },
+	{ title: "Favorites", type: "favorites" },
+	{ title: "|", type: null },
+	{ title: "Other", type: "other" },
 ];
 
-const BreadCrumb = ({activePage, setPage }) => {
+const Filters = ({filter, setFilter }) => {
 	const { colors } = useTheme()
 	const styles = makeStyles(colors)
 
 	return (
 		<View style={styles.container}>
-			{buttonData.map(({title, page}, index) => (
-				<TouchableOpacity key={index}  onPress={() => page && setPage(page)}>
-					<Text style={page == null ? styles.arrow : page == activePage ? styles.active : styles.text}>{title}</Text>
+			{buttonData.map(({title, type}, index) => (
+				<TouchableOpacity key={index}  onPress={() => type && setFilter(type)}>
+					{/* <Text style={filter == type ? styles.active : styles.text}>{title}</Text> */}
+					<Text style={type == null ? styles.arrow : type == filter ? styles.active : styles.text}>{title}</Text>
 				</TouchableOpacity>
 			))}
 		</View>
@@ -29,11 +30,12 @@ const BreadCrumb = ({activePage, setPage }) => {
 const makeStyles = (colors) => {
 	return StyleSheet.create({
 		container: {
+			flex: 0.1,
 			flexDirection: 'row',
 			justifyContent: 'space-between',
 			alignItems: 'center',
-			width: '80%',
-			display: 'flex',
+			paddingLeft: 30,
+			paddingRight: 30,
 		},
 		text: {
 			color: colors.text,
@@ -51,4 +53,4 @@ const makeStyles = (colors) => {
 	})
 };
 
-export default BreadCrumb
+export default Filters

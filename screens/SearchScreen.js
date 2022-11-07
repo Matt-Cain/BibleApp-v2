@@ -6,11 +6,13 @@ import { getBibles, setBible } from '../actions/bibles';
 import { getBooks, setBook } from '../actions/books';
 import { getChapters, setChapter } from '../actions/chapters';
 import { getVerses, setVerse } from '../actions/verses';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import BreadCrumb from '../components/BreadCrumb';
 import Bibles from '../components/Cards/Bibles';
 import Books from '../components/Cards/Books';
 import Chapters from '../components/Cards/Chapters';
 import Verses from '../components/Cards/Verses';
+import SearchBar from '../components/SearchBar';
 // import { bibles } from '../bibles'
 
 const SearchScreen = () => {
@@ -20,6 +22,8 @@ const SearchScreen = () => {
 
   // State
   const dispatch = useDispatch();
+
+  const [showSearch, setShowSearch] = React.useState(false);
 
   const [page, setPage] = React.useState("books");
   const { books } = useSelector(state => state.books);
@@ -32,6 +36,8 @@ const SearchScreen = () => {
   const PageComponent = pageComponents[page];
   const pageData = pagesData[page];
 
+  console.log('page', page);
+
   // FlatListItem
   const renderItem = ({ item, index }) => <PageComponent index={index} item={item} setPage={setPage} />;
 
@@ -43,7 +49,13 @@ const SearchScreen = () => {
 
   return (
     <View style={styles.container}>
-      <BreadCrumb activePage={page} setPage={setPage}/>
+      <View style={styles.header}>
+        {showSearch ? <SearchBar setPage={setPage} /> : <BreadCrumb activePage={page} setPage={setPage} />}
+        {showSearch
+          ? <Entypo name="cross" size={24} color={colors.primary} onPress={() => setShowSearch(!showSearch)} />
+          : <Ionicons name="search" size={20} color={colors.primary} onPress={() => setShowSearch(!showSearch)} />
+        }
+        </View>
       <View style={styles.innerContainer}>
         {pageData ? (
           <PageComponent data={pageData} setPage={setPage} />
@@ -84,6 +96,14 @@ const makeStyles = (colors) => {
     title: {
       fontSize: 20,
       color: "#121212",
+    },
+    header: {
+      height: 30,
+      // display: 'flex',
+      flexDirection: 'row',
+      // backgroundColor: 'red',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
     },
   })
 };

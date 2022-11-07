@@ -3,6 +3,7 @@ import {
   GET_CHAPTERS_SUCCESS,
   GET_CHAPTERS_FAILED,
   SET_CHAPTER,
+  CLEAR_CHAPTERS,
 } from '../constants';
 
 const initialState = {
@@ -39,6 +40,8 @@ const chapters = (state = initialState, action) => {
         chapter: action.payload.name,
         chapterNumber: action.payload.number,
       }
+    case CLEAR_CHAPTERS:
+      return initialState
     default:
       return state
   }

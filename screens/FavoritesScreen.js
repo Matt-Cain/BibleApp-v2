@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../hooks/useTheme';
@@ -17,11 +17,13 @@ const FavoritesScreen = ({ navigation }) => {
   const favorites = verses.filter(verse => verse.isFavorite);
   const { navButtonActive } = useSelector(state => state.navigation);
 
+useEffect(() => {
   if (navButtonActive && isFocused && Number.isInteger(selection)) {
     navigation.navigate("Train", { item: verses[selection] });
     setSelection(null);
     dispatch(deactivateNavButton());
   }
+}, [navButtonActive, isFocused, selection]);
 
   const updateSelection = (index) => {
     selection === index ? setSelection(null) : setSelection(index);

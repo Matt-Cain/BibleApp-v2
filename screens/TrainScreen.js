@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
+import { useSelector } from 'react-redux';
 import Voice from '@react-native-voice/voice';
 import { useTheme } from "../hooks/useTheme";
 
@@ -7,8 +8,8 @@ const TrainScreen = ({ route, navigation }) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
 
-  const { item } = route.params;
-  const { verse } = item;
+  const { currentVerse } = useSelector(state => state.trainer);
+  const { verse } = currentVerse || { verse: "" };
 
   const [started, setStarted] = useState(false);
   const [results, setResults] = useState([]);
@@ -41,6 +42,7 @@ const TrainScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+        {currentVerse ? (
       <View style={styles.innerContainer}>
         <View style={styles.item}>
           <TouchableOpacity>
@@ -58,6 +60,11 @@ const TrainScreen = ({ route, navigation }) => {
           {!started ? <Button title="Start Training" onPress={startSpeechToText} /> : <Button title="Stop Speech to text" onPress={stopSpeechToText} />}
         </View>
       </View>
+      ) : (
+        <View style={styles.innerContainer}>
+            <Text style={styles.text}>No verse selected</Text>
+        </View>
+      )}
     </View>
   );
 };

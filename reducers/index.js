@@ -4,6 +4,7 @@ import bibles from "./bibles";
 import books from "./books";
 import chapters from "./chapters";
 import navigation from "./navigation";
+import trainer from "./trainer";
 import verses from "./verses";
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     books: books,
     chapters: chapters,
     navigation: navigation,
+    trainer: trainer,
     verses: verses,
 });
 

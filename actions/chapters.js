@@ -1,4 +1,4 @@
-import { GET_CHAPTERS_PENDING, SET_CHAPTER } from '../constants';
+import { GET_CHAPTERS_PENDING, SET_CHAPTER, CLEAR_CHAPTERS } from '../constants';
 
 export const getChapters = (payload) => {
   return {
@@ -11,5 +11,11 @@ export const setChapter = (payload) => {
   return {
     type: SET_CHAPTER,
     payload: payload,
+  }
+}
+
+export const clearChapters = () => {
+  return {
+    type: CLEAR_CHAPTERS
   }
 }

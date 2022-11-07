@@ -1,4 +1,4 @@
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 
 // Custom TabBarButton
 import CustomTabBarButton from "./CustomTabBarButton";
@@ -22,15 +22,15 @@ export const tabData = [
 		icon: { Icon: Ionicons, iconName: "folder", size: 30 },
 	},
 	{
-		name: "Train",
-		screen: TrainScreen,
+		name: "Favorites",
+		screen: FavoritesScreen,
 		icon: { Icon: AntDesign, iconName: "plus", size: 50 },
 		CustomButton: CustomTabBarButton
 	},
 	{
-		name: "Favorites",
-		screen: FavoritesScreen,
-		icon: { Icon: Ionicons, iconName: "star", size: 30 },
+		name: "Train",
+		screen: TrainScreen,
+		icon: { Icon: Entypo, iconName: "500px", size: 30 },
 	},
 	{
 		name: "Settings",

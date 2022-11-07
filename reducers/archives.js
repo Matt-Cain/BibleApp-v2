@@ -14,7 +14,6 @@ const initialState = {
 }
 
 const archives = (state = initialState, action) => {
-  console.log('archives reducer', action);
   switch (action.type) {
     case ARCHIVE_VERSE_PENDING:
       return {
@@ -34,7 +33,6 @@ const archives = (state = initialState, action) => {
         error: action.message,
       }
     case SAVE_AS_FAVORITE:
-      console.log('save as favorite', action);
       return {
         ...state,
         verses: state.verses.map((verse) => verse.id === action.payload.id ? {...verse, isFavorite: true} : verse),
