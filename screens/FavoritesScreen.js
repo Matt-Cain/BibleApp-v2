@@ -30,7 +30,6 @@ useEffect(() => {
   }
 
   const handleFavorite = (item) => {
-    console.log('item', item.isFavorite);
     if (item.isFavorite) {
       dispatch(removeAsFavorite(item));
     } else {

@@ -45,17 +45,17 @@ useEffect(() => {
   }
 
   const Item = ({ index, item }) => {
-    const { verse, isFavorite } = item;
+    const { bookname, chapter, verse, text, isFavorite } = item;
     return (
       <View style={[styles.item, index === selection ? styles.selected : ""]}>
         <TouchableOpacity onPress={() => updateSelection(index)}>
           <View style={[index === selection ? styles.headerSelected : styles.header]}>
-            <Text style={[index === selection ? styles.titleSelected : styles.title]}>{verse.bookname}: {verse.chapter} Verse: {verse.verse}</Text>
+            <Text style={[index === selection ? styles.titleSelected : styles.title]}>{bookname} {chapter}:{verse}</Text>
             <Ionicons onPress={() => handleFavorite(item)} name={isFavorite ? 'star' : 'star-outline'} size={24} color={index === selection ? 'black' : colors.primary} />
           </View>
           <Text
             style={[styles.verseNumber, styles.itemText, index === selection ? styles.itemTextSelected : ""]}>
-            {verse.text}
+            {text}
           </Text>
         </TouchableOpacity>
       </View>

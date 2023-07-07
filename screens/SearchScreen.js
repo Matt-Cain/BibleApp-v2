@@ -1,46 +1,44 @@
 import React, { useEffect } from 'react'
 import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../hooks/useTheme'
 import { getBibles, setBible } from '../actions/bibles';
 import { getBooks, setBook } from '../actions/books';
 import { getChapters, setChapter } from '../actions/chapters';
 import { getVerses, setVerse } from '../actions/verses';
-import { Ionicons, Entypo } from '@expo/vector-icons';
 import BreadCrumb from '../components/BreadCrumb';
 import Bibles from '../components/Cards/Bibles';
 import Books from '../components/Cards/Books';
 import Chapters from '../components/Cards/Chapters';
 import Verses from '../components/Cards/Verses';
 import SearchBar from '../components/SearchBar';
-// import { bibles } from '../bibles'
 
 const SearchScreen = () => {
   // Themes
   const { colors } = useTheme()
   const styles = makeStyles(colors)
 
-  // State
+  // Redux
   const dispatch = useDispatch();
-
-  const [showSearch, setShowSearch] = React.useState(false);
-
-  const [page, setPage] = React.useState("books");
   const { books } = useSelector(state => state.books);
   const { chapters } = useSelector(state => state.chapters);
   const { verses } = useSelector(state => state.verses);
 
+  // State
+  const [page, setPage] = React.useState("books");
+  const [showSearch, setShowSearch] = React.useState(false);
+
+  // Dynamic Components
   const pagesData = { books: books, chapters: chapters, verses: verses };
   const pageComponents = {  books: Books, chapters: Chapters, verses: Verses };
-
   const PageComponent = pageComponents[page];
   const pageData = pagesData[page];
-
-  console.log('page', page);
 
   // FlatListItem
   const renderItem = ({ item, index }) => <PageComponent index={index} item={item} setPage={setPage} />;
 
+  // LifeCycle
   useEffect(() => {
     if (books.length === 0) {
       dispatch(getBooks());

@@ -15,7 +15,6 @@ const initialState = {
 }
 
 const chapters = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case GET_CHAPTERS_PENDING:
       return {

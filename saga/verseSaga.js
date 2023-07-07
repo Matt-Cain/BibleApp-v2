@@ -18,7 +18,6 @@ const getApi = (payload) => {
 function* fetchVerses(action) {
 	try {
 		const verses = yield call(getApi, action.payload);
-		console.log('verses', verses);
 		yield put({ type: GET_VERSES_SUCCESS, verses: verses.data });
 	} catch (e) {
 		yield put({ type: GET_VERSES_FAILED, message: e.message });

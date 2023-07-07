@@ -24,7 +24,7 @@ const archives = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        verses: [...state.verses, { verse: action.verse, isFavorite: false, id: uuid() }],
+        verses: [...state.verses, { ...action.verse, isFavorite: false, id: uuid() }],
       }
     case ARCHIVE_VERSE_FAILED:
       return {
